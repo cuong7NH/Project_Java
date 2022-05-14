@@ -1,7 +1,6 @@
 package src.controller;
 
 import src.dao.SalaryCadreDao;
-import src.dao.SpecializationDao;
 import src.model.Cadre;
 import src.model.Engineer;
 import src.model.Worker;
@@ -15,7 +14,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 public class SalaryCadreController {
-
     private final SalaryCadreView salaryCadreView;
     private final SalaryCadreDao salaryCadreDao;
 
@@ -43,8 +41,8 @@ public class SalaryCadreController {
                     level = ((Worker) salaryCadreList.get(i)).getLevel();
                 }
                 Integer workDay = salaryCadreList.get(i).getWorkDay();
-                Integer CS = salaryCadreList.get(i).getCoefficientsSalary();
-                Integer s = experience * level * workDay * CS;
+                Integer coefficientsSalary = salaryCadreList.get(i).getCoefficientsSalary();
+                Integer  salaryCadre = experience * level * workDay * coefficientsSalary;
                 Salary salary = new Salary(
                         salaryCadreList.get(i).getId(),
                         salaryCadreList.get(i).getName(),
@@ -55,7 +53,7 @@ public class SalaryCadreController {
                         salaryCadreList.get(i).getCoefficientsSalary(),
                         salaryCadreList.get(i).getWorkDay(),
                         salaryCadreList.get(i).getHomeTownId(),
-                        s,
+                        salaryCadre,
                         experience,
                         level);
                 unsortedArray.add(salary);
@@ -80,8 +78,8 @@ public class SalaryCadreController {
                     level = ((Worker) salaryCadreList.get(i)).getLevel();
                 }
                 Integer workDay = salaryCadreList.get(i).getWorkDay();
-                Integer CS = salaryCadreList.get(i).getCoefficientsSalary();
-                Integer s = experience * level * workDay * CS;
+                Integer coefficients = salaryCadreList.get(i).getCoefficientsSalary();
+                Integer salaryCadre = experience * level * workDay * coefficients;
                 Salary salary = new Salary(
                         salaryCadreList.get(i).getId(),
                         salaryCadreList.get(i).getName(),
@@ -92,7 +90,7 @@ public class SalaryCadreController {
                         salaryCadreList.get(i).getCoefficientsSalary(),
                         salaryCadreList.get(i).getWorkDay(),
                         salaryCadreList.get(i).getHomeTownId(),
-                        s,
+                        salaryCadre,
                         experience,
                         level);
                 unsortedArray.add(salary);
@@ -109,5 +107,9 @@ public class SalaryCadreController {
             salaryCadreView.showSalaryCadreList(salaryCadreDao.filterCadreByName(salaryCadreDao.getSalaryCadreList(), name));
 
         }
+    }
+    public void showSalaryCadreMangerView() {
+        salaryCadreView.setVisible(true);
+        salaryCadreView.showSalaryCadreList(salaryCadreDao.getSalaryCadreList());
     }
 }

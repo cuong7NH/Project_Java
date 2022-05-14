@@ -1,6 +1,7 @@
 package src.dao;
 
 import src.connection.ConnectionFactory;
+import src.interfaces.HomeTownInterface;
 import src.model.HomeTown;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -9,7 +10,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.OptionalInt;
 
-public class HomeTownDao {
+public class HomeTownDao implements HomeTownInterface {
     Connection connection = null;
     PreparedStatement ptmt = null;
     ResultSet resultSet = null;
@@ -151,8 +152,6 @@ public class HomeTownDao {
         }
         return name;
     }
-
-
 
     public boolean checkHomeTown(Integer id) {
         HomeTownDao homeTownDao = new HomeTownDao();

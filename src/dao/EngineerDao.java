@@ -1,6 +1,7 @@
 package src.dao;
 
 import src.connection.ConnectionFactory;
+import src.interfaces.EngineerInterface;
 import src.model.Engineer;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -8,7 +9,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-public class EngineerDao {
+public class EngineerDao implements EngineerInterface {
     Connection connection = null;
     PreparedStatement ptmt = null;
     ResultSet resultSet = null;
@@ -61,7 +62,6 @@ public class EngineerDao {
     }
 
     public boolean addEngineer(Engineer engineer) {
-        System.out.println("engineer" + engineer.toString());
         boolean success = false;
         try {
             String queryString = "INSERT INTO tbl_engineer(id, name, age, gender, address, phone, coefficients_salary, work_day, years_of_experience, home_town_id) VALUES(?,?,?,?,?,?,?,?,?,?)";

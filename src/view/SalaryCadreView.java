@@ -25,7 +25,7 @@ public class SalaryCadreView extends JFrame implements ActionListener {
     // Khởi tạo Table
     private JTable salaryCadreTable;
     private final String[] columnNames = new String[]{
-            "ID", "Name", "CS", "Work Day", "Experience", "Level", "Salary"};
+            "ID", "Name", "Coefficients", "Work Day", "Experience", "Level", "Salary"};
     private final Object salaryCadreData = new Object[][]{};
 
     public SalaryCadreView() {
@@ -84,8 +84,8 @@ public class SalaryCadreView extends JFrame implements ActionListener {
                 level = ((Worker) salaryCadreList.get(i)).getLevel();
             }
             Integer workDay = salaryCadreList.get(i).getWorkDay();
-            Integer CS = salaryCadreList.get(i).getCoefficientsSalary();
-            int salary = experience * level * workDay * CS;
+            Integer coefficientsSalary = salaryCadreList.get(i).getCoefficientsSalary();
+            int salary = experience * level * workDay * coefficientsSalary;
             salaryCadres[i][0] = salaryCadreList.get(i).getId();
             salaryCadres[i][1] = salaryCadreList.get(i).getName();
             salaryCadres[i][2] = String.valueOf(salaryCadreList.get(i).getCoefficientsSalary());
@@ -122,17 +122,12 @@ public class SalaryCadreView extends JFrame implements ActionListener {
     public void handleFilterCadreByNameListener(ActionListener listener) {
         filterByNameBtn.addActionListener(listener);
     }
-
-
     public String getInputName() {
         return filterByNameField.getText().trim();
-
     }
-
     public void showMessage(String message) {
         JOptionPane.showMessageDialog(this, message);
     }
-
     @Override
     public void actionPerformed(ActionEvent e) {
 

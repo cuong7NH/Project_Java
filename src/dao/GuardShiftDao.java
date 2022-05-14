@@ -79,31 +79,6 @@ public class GuardShiftDao {
         return success;
     }
 
-//    public boolean editGuardShift(GuardShift guardShift) {
-//        boolean success = false;
-//        try {
-//            String sql = "UPDATE tbl_quard_shift SET name = ? WHERE id = ?";
-//            connection = getConnection();
-//            ptmt = connection.prepareStatement(sql);
-//            ptmt.setString(1, guardShift.getName());
-//            ptmt.setInt(2, guardShift.getId());
-//            ptmt.executeUpdate();
-//            success = true;
-//        } catch (SQLException e) {
-//            e.printStackTrace();
-//        } finally {
-//            try {
-//                if (ptmt != null)
-//                    ptmt.close();
-//                if (connection != null)
-//                    connection.close();
-//            } catch (Exception e) {
-//                e.printStackTrace();
-//            }
-//        }
-//        return success;
-//    }
-
     public boolean deleteGuardShift(String guard_id, Integer shift_id) {
         boolean success = false;
         try {
@@ -129,12 +104,4 @@ public class GuardShiftDao {
         return success;
     }
 
-//    public boolean checkGuardShift(Integer id) {
-//        GuardShiftDao guardShiftDao = new GuardShiftDao();
-//        GuardShift guardShift =  guardShiftDao.getGuardShiftList().stream()
-//                .filter(o -> id.equals(o.getId()))
-//                .findAny()
-//                .orElse(null);
-//        return guardShift != null;
-//}
 }

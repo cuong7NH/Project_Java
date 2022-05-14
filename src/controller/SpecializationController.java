@@ -38,6 +38,8 @@ public class SpecializationController {
             if (specializationDao.editSpecialization(specialization)) {
                 specializationView.showSpecializationList(specializationDao.getSpecializationList());
                 specializationView.showMessage("Chỉnh sửa thành công!");
+            } else {
+                specializationView.showMessage("Error!");
             }
         }
     }
@@ -48,6 +50,8 @@ public class SpecializationController {
                 if (specializationDao.deleteSpecialization(specialization.getId())) {
                     specializationView.showSpecializationList(specializationDao.getSpecializationList());
                     specializationView.showMessage("Xóa thành công!");
+                } else {
+                    specializationView.showMessage("Error!");
                 }
             }
         }

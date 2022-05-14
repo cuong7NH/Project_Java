@@ -1,11 +1,9 @@
 package src.controller;
 
 import src.dao.WorkerDao;
-import src.model.Employee;
 import src.model.Worker;
 import src.validate.Validate;
 import src.view.WorkerView;
-
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import java.awt.event.ActionEvent;
@@ -86,7 +84,10 @@ public class WorkerController {
             if (workerDao.editWorker(worker)) {
                 workerView.showWorkerList(workerDao.getWorkerList());
                 workerView.showMessage("Chỉnh sửa thành công!");
+            } else {
+                workerView.showMessage("Error!");
             }
+
         }
     }
 
@@ -97,6 +98,8 @@ public class WorkerController {
                 if (workerDao.deleteWorker(worker.getId())) {
                     workerView.showWorkerList(workerDao.getWorkerList());
                     workerView.showMessage("Xóa thành công!");
+                } else {
+                    workerView.showMessage("Error!");
                 }
             }
         }
@@ -111,5 +114,8 @@ public class WorkerController {
     public void showWorkerMangerView() {
         workerView.setVisible(true);
         workerView.showWorkerList(workerDao.getWorkerList());
+    }
+    public void hideWorkerMangerView() {
+        workerView.setVisible(false);
     }
 }

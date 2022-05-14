@@ -31,7 +31,7 @@ public class GuardView extends JFrame implements ActionListener {
     // Table
     private JTable guardTable;
     private final String[] columnNames = new String[]{
-            "ID", "Name", "Age", "Gender", "Address", "Phone", "CS", "Work Day", "Work Place", "Home Town"};
+            "ID", "Name", "Age", "Gender", "Address", "Phone", "Coefficients", "Work Day", "Work Place", "Home Town"};
     private final Object guardData = new Object[][]{};
 
     public GuardView() {

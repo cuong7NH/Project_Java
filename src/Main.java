@@ -1,9 +1,6 @@
 package src;
 
 import src.controller.*;
-import src.model.Employee;
-import src.model.GuardShift;
-import src.model.HomeTown;
 import src.view.*;
 
 import java.awt.*;
@@ -15,15 +12,8 @@ public class Main {
     public static void main(String[] args) throws SQLException {
         EventQueue.invokeLater(new Runnable() {
             public void run() {
-                LoginView loginView = new LoginView();
-//                LoginController loginController = new LoginController(loginView);
-//                loginController.showLoginView();
-//                EmployeeView employeeView = new EmployeeView();
-//                EmployeeController employeeController = new EmployeeController(employeeView);
-//                employeeController.showEmployeeView();
                 WorkerView workerView = new WorkerView();
                 WorkerController workerController = new WorkerController(workerView);
-//                workerController.showWorkerMangerView();
 
                 EngineerView engineerView = new EngineerView();
                 EngineerController engineerController = new EngineerController(engineerView);
@@ -33,7 +23,6 @@ public class Main {
 
                 GuardView guardView = new GuardView();
                 GuardController guardController = new GuardController(guardView);
-//                guardController.showGuardMangerView();
 
                 WorkPlaceView workPlaceView = new WorkPlaceView();
                 WorkPlaceController workPlaceController = new WorkPlaceController(workPlaceView);
@@ -49,18 +38,18 @@ public class Main {
 
                 MenuManagerView menuManagerView = new MenuManagerView();
                 menuManagerView.setVisible(true);
+
                 MenuManagerController menuManagerController = new MenuManagerController(
                         menuManagerView,
-                        workerView,
-                        engineerView,
-                        specializationView,
-                        guardView,
-                        workPlaceView,
-                        guardShiftView,
-                        homeTownView,
-                        salaryCadreView
+                        workerController,
+                        engineerController,
+                        specializationController,
+                        guardController,
+                        workPlaceController,
+                        guardShiftController,
+                        homeTownController,
+                        salaryCadreController
                 );
-
             }
         });
     }

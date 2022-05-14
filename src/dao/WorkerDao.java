@@ -1,7 +1,7 @@
 package src.dao;
 
 import src.connection.ConnectionFactory;
-import src.model.Employee;
+import src.interfaces.WorkerInterface;
 import src.model.Worker;
 
 import java.sql.Connection;
@@ -10,11 +10,10 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-public class WorkerDao {
+public class WorkerDao implements WorkerInterface {
     Connection connection = null;
     PreparedStatement ptmt = null;
     ResultSet resultSet = null;
-
 
     public WorkerDao() {
 

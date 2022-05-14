@@ -35,7 +35,7 @@ public class WorkerView extends JFrame implements ActionListener {
     // Table
     private JTable workerTable;
     private final String[] columnNames = new String[]{
-            "ID", "Name", "Age", "Gender", "Address", "Phone", "CS", "Work Day", "level", "Home Town"};
+            "ID", "Name", "Age", "Gender", "Address", "Phone", "Coefficients", "Work Day", "level", "Home Town"};
     private final Object workerData = new Object[][]{};
     public WorkerView() {
         initComponents();

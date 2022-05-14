@@ -1,6 +1,7 @@
 package src.dao;
 
 import src.connection.ConnectionFactory;
+import src.interfaces.WorkPlaceInterface;
 import src.model.WorkPlace;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -8,7 +9,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-public class WorkPlaceDao {
+public class WorkPlaceDao implements WorkPlaceInterface {
     Connection connection = null;
     PreparedStatement ptmt = null;
     ResultSet resultSet = null;
@@ -20,7 +21,6 @@ public class WorkPlaceDao {
         conn = ConnectionFactory.getInstance().getConnection();
         return conn;
     }
-
     public ArrayList<WorkPlace> getWorkPlaceList() {
         ArrayList<WorkPlace> workPlaceList = new ArrayList<>();
         try {
@@ -53,7 +53,6 @@ public class WorkPlaceDao {
     }
 
     public boolean addWorkPlace(WorkPlace workPlace) {
-        System.out.println("add");
         boolean success = false;
         try {
             String queryString = "INSERT INTO tbl_work_place(name) VALUES(?)";

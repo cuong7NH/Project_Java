@@ -1,4 +1,5 @@
 package src.controller;
+
 import src.dao.*;
 import src.view.*;
 
@@ -7,55 +8,38 @@ import java.awt.event.ActionListener;
 
 public class MenuManagerController {
     // View
-    private final MenuManagerView menuManagerView;
-    private final WorkerView workerView;
-    private final EngineerView engineerView;
-    private final SpecializationView specializationView;
+//    private MenuManagerView menuManagerView;
+    private final WorkerController workerController;
+    private final EngineerController engineerController;
+    private final SpecializationController specializationController;
+    private final GuardController guardController;
+    private final WorkPlaceController workPlaceController;
+    private final GuardShiftController guardShiftController;
+    private final SalaryCadreController salaryCadreController;
+    private final HomeTownController homeTownController;
 
-    private final GuardView guardView;
-    private final WorkPlaceView workPlaceView;
-    private final GuardShiftView guardShiftView;
-    private final HomeTownView homeTownView;
-    private final SalaryCadreView salaryCadreView;
-
-    // DAO
-    private final WorkerDao workerDao;
-    private final EngineerDao engineerDao;
-    private final SpecializationDao specializationDao;
-    private final GuardDao guardDao;
-    private final WorkPlaceDao workPlaceDao;
-    private final GuardShiftDao guardShiftDao;
-    private final HomeTownDao homeTownDao;
-    private final SalaryCadreDao salaryCadreDao;
 
     public MenuManagerController(
             MenuManagerView menuManagerView,
-            WorkerView workerView,
-            EngineerView engineerView,
-            SpecializationView specializationView,
-            GuardView guardView,
-            WorkPlaceView workPlaceView,
-            GuardShiftView guardShiftView,
-            HomeTownView homeTownView,
-            SalaryCadreView salaryCadreView
+            WorkerController workerController,
+            EngineerController engineerController,
+            SpecializationController specializationController,
+            GuardController guardController,
+            WorkPlaceController workPlaceController,
+            GuardShiftController guardShiftController,
+            HomeTownController homeTownController,
+            SalaryCadreController salaryCadreController
     ) {
-        this.menuManagerView = menuManagerView;
-        this.workerView = workerView;
-        this.engineerView = engineerView;
-        this.specializationView = specializationView;
-        this.guardView = guardView;
-        this.workPlaceView = workPlaceView;
-        this.guardShiftView = guardShiftView;
-        this.homeTownView = homeTownView;
-        this.salaryCadreView = salaryCadreView;
-        workerDao = new WorkerDao();
-        engineerDao = new EngineerDao();
-        specializationDao = new SpecializationDao();
-        guardDao = new GuardDao();
-        workPlaceDao = new WorkPlaceDao();
-        guardShiftDao = new GuardShiftDao();
-        homeTownDao = new HomeTownDao();
-        salaryCadreDao = new SalaryCadreDao();
+//        this.menuManagerView = menuManagerView;
+        this.workerController = workerController;
+        this.engineerController = engineerController;
+        this.specializationController = specializationController;
+        this.guardController = guardController;
+        this.workPlaceController = workPlaceController;
+        this.guardShiftController = guardShiftController;
+        this.salaryCadreController = salaryCadreController;
+        this.homeTownController = homeTownController;
+
         menuManagerView.openWorkerViewListener(new MenuManagerController.OpenWorkerViewListener());
         menuManagerView.openEngineerViewListener(new MenuManagerController.OpenEngineerViewListener());
         menuManagerView.openSpecializationViewListener(new MenuManagerController.OpenSpecializationViewListener());
@@ -65,59 +49,52 @@ public class MenuManagerController {
         menuManagerView.openHomeTownViewListener(new MenuManagerController.OpenHomeTownViewListener());
         menuManagerView.openSalaryCadreViewListener(new MenuManagerController.OpenSalaryCadreViewListener());
     }
+
     class OpenWorkerViewListener implements ActionListener {
         public void actionPerformed(ActionEvent e) {
-            workerView.setVisible(true);
-            engineerView.setVisible(false);
-            guardView.setVisible(false);
-            workerView.showWorkerList(workerDao.getWorkerList());
+            workerController.showWorkerMangerView();
         }
     }
+
     class OpenEngineerViewListener implements ActionListener {
         public void actionPerformed(ActionEvent e) {
-            workerView.setVisible(false);
-            engineerView.setVisible(true);
-            guardView.setVisible(false);
-            engineerView.showEngineerList(engineerDao.getEngineerList());
+            engineerController.showEngineerMangerView();
         }
     }
+
     class OpenSpecializationViewListener implements ActionListener {
         public void actionPerformed(ActionEvent e) {
-            specializationView.setVisible(true);
-            specializationView.showSpecializationList(specializationDao.getSpecializationList());
+            specializationController.showSpecializationMangerView();
         }
     }
 
     class OpenGuardViewListener implements ActionListener {
         public void actionPerformed(ActionEvent e) {
-            workerView.setVisible(false);
-            engineerView.setVisible(false);
-            guardView.setVisible(true);
-            guardView.showGuardList(guardDao.getGuardList());
+            guardController.showGuardMangerView();
         }
     }
+
     class OpenWorkPlaceViewListener implements ActionListener {
         public void actionPerformed(ActionEvent e) {
-            workPlaceView.setVisible(true);
-            workPlaceView.showWorkPlaceList(workPlaceDao.getWorkPlaceList());
+            workPlaceController.showWorkPlaceMangerView();
         }
     }
+
     class OpenWorkGuardShiftListener implements ActionListener {
         public void actionPerformed(ActionEvent e) {
-            guardShiftView.setVisible(true);
-            guardShiftView.showGuardShiftList(guardShiftDao.getGuardShiftList());
+            guardShiftController.showGuardShiftMangerView();
         }
     }
+
     class OpenHomeTownViewListener implements ActionListener {
         public void actionPerformed(ActionEvent e) {
-            homeTownView.setVisible(true);
-            homeTownView.showHomeTownList(homeTownDao.getHomeTownList());
+            homeTownController.showHomeTownMangerView();
         }
     }
+
     class OpenSalaryCadreViewListener implements ActionListener {
         public void actionPerformed(ActionEvent e) {
-            salaryCadreView.setVisible(true);
-            salaryCadreView.showSalaryCadreList(salaryCadreDao.getSalaryCadreList());
+            salaryCadreController.showSalaryCadreMangerView();
         }
     }
 }

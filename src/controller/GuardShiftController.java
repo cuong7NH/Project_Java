@@ -2,7 +2,6 @@ package src.controller;
 
 import src.dao.GuardShiftDao;
 import src.model.GuardShift;
-import src.model.Worker;
 import src.validate.Validate;
 import src.view.GuardShiftView;
 
@@ -20,7 +19,6 @@ public class GuardShiftController {
         this.guardShiftView = guardShiftView;
         guardShiftDao = new GuardShiftDao();
         guardShiftView.handleAddGuardShiftListener(new GuardShiftController.AddGuardShiftListener());
-//        guardShiftView.handleEditGuardShiftListener(new GuardShiftController.EditGuardShiftListener());
         guardShiftView.handleDeleteGuardShiftListener(new GuardShiftController.DeleteGuardShiftListener());
         guardShiftView.handleClickRowGuardShiftList(new GuardShiftController.ListGuardShiftSelectionListener());
     }
@@ -47,15 +45,6 @@ public class GuardShiftController {
         }
     }
 
-//    class EditGuardShiftListener implements ActionListener {
-//        public void actionPerformed(ActionEvent e) {
-//            GuardShift guardShift = guardShiftView.getGuardShiftInfo();
-//            if (guardShiftDao.editGuardShift(guardShift)) {
-//                guardShiftView.showGuardShiftList(guardShiftDao.getGuardShiftList());
-//                guardShiftView.showMessage("Chỉnh sửa thành công!");
-//            }
-//        }
-//    }
     class DeleteGuardShiftListener implements ActionListener {
         public void actionPerformed(ActionEvent e) {
             GuardShift guardShift = guardShiftView.getGuardShiftInfo();
@@ -63,6 +52,8 @@ public class GuardShiftController {
                 if (guardShiftDao.deleteGuardShift(guardShift.getGuard_id(), guardShift.getShift_id())){
                     guardShiftView.showGuardShiftList(guardShiftDao.getGuardShiftList());
                     guardShiftView.showMessage("Xóa thành công!");
+                } else {
+                    guardShiftView.showMessage("Error!");
                 }
             }
         }

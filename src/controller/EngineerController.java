@@ -2,7 +2,6 @@ package src.controller;
 
 import src.dao.EngineerDao;
 import src.model.Engineer;
-import src.model.Worker;
 import src.view.EngineerView;
 
 import javax.swing.event.ListSelectionEvent;
@@ -43,6 +42,8 @@ public class EngineerController {
             if (engineerDao.editEngineer(engineer)) {
                 engineerView.showEngineerList(engineerDao.getEngineerList());
                 engineerView.showMessage("Chỉnh sửa thành công!");
+            } else {
+                engineerView.showMessage("Error!");
             }
         }
     }
@@ -53,6 +54,8 @@ public class EngineerController {
                 if (engineerDao.deleteEngineer(engineer.getId())) {
                     engineerView.showEngineerList(engineerDao.getEngineerList());
                     engineerView.showMessage("Xóa thành công!");
+                } else {
+                    engineerView.showMessage("Error!");
                 }
             }
         }

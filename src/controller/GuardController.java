@@ -13,7 +13,6 @@ public class GuardController {
     private final GuardDao guardDao;
     private final GuardView guardView;
 
-
     public GuardController(GuardView guardView) {
         this.guardView = guardView;
         guardDao = new GuardDao();
@@ -42,6 +41,8 @@ public class GuardController {
             if (guardDao.editGuard(guard)) {
                 guardView.showGuardList(guardDao.getGuardList());
                 guardView.showMessage("Chỉnh sửa thành công!");
+            } else {
+                guardView.showMessage("Error!");
             }
         }
     }
@@ -52,6 +53,8 @@ public class GuardController {
                 if (guardDao.deleteGuard(guard.getId())) {
                     guardView.showGuardList(guardDao.getGuardList());
                     guardView.showMessage("Xóa thành công!");
+                } else {
+                    guardView.showMessage("Error!");
                 }
             }
         }

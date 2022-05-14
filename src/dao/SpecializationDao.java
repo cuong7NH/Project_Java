@@ -1,6 +1,6 @@
 package src.dao;
-
 import src.connection.ConnectionFactory;
+import src.interfaces.SpecializationInterface;
 import src.model.Specialization;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -8,7 +8,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-public class SpecializationDao {
+public class SpecializationDao implements SpecializationInterface {
     Connection connection = null;
     PreparedStatement ptmt = null;
     ResultSet resultSet = null;
@@ -53,7 +53,6 @@ public class SpecializationDao {
     }
 
     public boolean addSpecialization(Specialization specialization) {
-        System.out.println("add");
         boolean success = false;
         try {
             String queryString = "INSERT INTO tbl_specialization(name) VALUES(?)";

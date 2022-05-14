@@ -2,7 +2,6 @@ package src.controller;
 
 import src.dao.WorkPlaceDao;
 import src.model.WorkPlace;
-import src.model.Worker;
 import src.view.WorkPlaceView;
 
 import javax.swing.event.ListSelectionEvent;
@@ -13,7 +12,6 @@ import java.awt.event.ActionListener;
 public class WorkPlaceController {
     private final WorkPlaceDao workPlaceDao;
     private final WorkPlaceView workPlaceView;
-
 
     public WorkPlaceController(WorkPlaceView workPlaceView) {
         this.workPlaceView = workPlaceView;
@@ -43,6 +41,8 @@ public class WorkPlaceController {
             if (workPlaceDao.editWorkPlace(workPlace)) {
                 workPlaceView.showWorkPlaceList(workPlaceDao.getWorkPlaceList());
                 workPlaceView.showMessage("Chỉnh sửa thành công!");
+            } else {
+                workPlaceView.showMessage("Error!");
             }
         }
     }
@@ -53,6 +53,8 @@ public class WorkPlaceController {
                 if (workPlaceDao.deleteWorkPlace(workPlace.getId())) {
                     workPlaceView.showWorkPlaceList(workPlaceDao.getWorkPlaceList());
                     workPlaceView.showMessage("Xóa thành công!");
+                } else {
+                    workPlaceView.showMessage("Error!");
                 }
             }
         }

@@ -2,6 +2,7 @@ package src.dao;
 
 import jdk.dynalink.linker.support.Guards;
 import src.connection.ConnectionFactory;
+import src.interfaces.GuardInterface;
 import src.model.Guard;
 import src.model.WorkPlace;
 
@@ -11,7 +12,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-public class GuardDao {
+public class GuardDao implements GuardInterface {
     Connection connection = null;
     PreparedStatement ptmt = null;
     ResultSet resultSet = null;

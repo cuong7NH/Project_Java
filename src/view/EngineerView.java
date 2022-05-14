@@ -31,7 +31,7 @@ public class EngineerView extends JFrame implements ActionListener {
     // Table
     private JTable engineerTable;
     private final String[] columnNames = new String[]{
-            "ID", "Name", "Age", "Gender", "Address", "Phone", "CS", "Work Day", "Experience", "Home Town"};
+            "ID", "Name", "Age", "Gender", "Address", "Phone", "Coefficients", "Work Day", "Experience", "Home Town"};
     private final Object engineerData = new Object[][]{};
 
     public EngineerView() {

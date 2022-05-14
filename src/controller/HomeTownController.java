@@ -3,16 +3,13 @@ package src.controller;
 import src.dao.HomeTownDao;
 import src.model.HomeTown;
 import src.view.HomeTownView;
-
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
 public class HomeTownController {
     private final HomeTownDao homeTownDao;
     private final HomeTownView homeTownView;
-
 
     public HomeTownController(HomeTownView homeTownView) {
         this.homeTownView = homeTownView;
@@ -41,6 +38,8 @@ public class HomeTownController {
             if (homeTownDao.editHomeTown(homeTown)) {
                 homeTownView.showHomeTownList(homeTownDao.getHomeTownList());
                 homeTownView.showMessage("Chỉnh sửa thành công!");
+            } else {
+                homeTownView.showMessage("Error!");
             }
         }
     }
@@ -51,6 +50,8 @@ public class HomeTownController {
                 if (homeTownDao.deleteHomeTown(homeTown.getId())) {
                     homeTownView.showHomeTownList(homeTownDao.getHomeTownList());
                     homeTownView.showMessage("Xóa thành công!");
+                } else {
+                    homeTownView.showMessage("Error!");
                 }
             }
         }
