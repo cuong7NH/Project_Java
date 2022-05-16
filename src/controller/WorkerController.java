@@ -115,7 +115,4 @@ public class WorkerController {
         workerView.setVisible(true);
         workerView.showWorkerList(workerDao.getWorkerList());
     }
-    public void hideWorkerMangerView() {
-        workerView.setVisible(false);
-    }
 }

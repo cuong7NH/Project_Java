@@ -7,93 +7,81 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class MenuManagerController {
-    // View
-//    private MenuManagerView menuManagerView;
-    private final WorkerController workerController;
-    private final EngineerController engineerController;
-    private final SpecializationController specializationController;
-    private final GuardController guardController;
-    private final WorkPlaceController workPlaceController;
-    private final GuardShiftController guardShiftController;
-    private final SalaryCadreController salaryCadreController;
-    private final HomeTownController homeTownController;
-
 
     public MenuManagerController(
-            MenuManagerView menuManagerView,
-            WorkerController workerController,
-            EngineerController engineerController,
-            SpecializationController specializationController,
-            GuardController guardController,
-            WorkPlaceController workPlaceController,
-            GuardShiftController guardShiftController,
-            HomeTownController homeTownController,
-            SalaryCadreController salaryCadreController
+            MenuManagerView menuManagerView
     ) {
-//        this.menuManagerView = menuManagerView;
-        this.workerController = workerController;
-        this.engineerController = engineerController;
-        this.specializationController = specializationController;
-        this.guardController = guardController;
-        this.workPlaceController = workPlaceController;
-        this.guardShiftController = guardShiftController;
-        this.salaryCadreController = salaryCadreController;
-        this.homeTownController = homeTownController;
-
-        menuManagerView.openWorkerViewListener(new MenuManagerController.OpenWorkerViewListener());
-        menuManagerView.openEngineerViewListener(new MenuManagerController.OpenEngineerViewListener());
-        menuManagerView.openSpecializationViewListener(new MenuManagerController.OpenSpecializationViewListener());
-        menuManagerView.openGuardViewListener(new MenuManagerController.OpenGuardViewListener());
-        menuManagerView.openWorkPlaceViewListener(new MenuManagerController.OpenWorkPlaceViewListener());
-        menuManagerView.openWorkGuardShiftListener(new MenuManagerController.OpenWorkGuardShiftListener());
-        menuManagerView.openHomeTownViewListener(new MenuManagerController.OpenHomeTownViewListener());
-        menuManagerView.openSalaryCadreViewListener(new MenuManagerController.OpenSalaryCadreViewListener());
+        menuManagerView.openWorkerViewListener(new OpenWorkerViewListener());
+        menuManagerView.openEngineerViewListener(new OpenEngineerViewListener());
+        menuManagerView.openSpecializationViewListener(new OpenSpecializationViewListener());
+        menuManagerView.openGuardViewListener(new OpenGuardViewListener());
+        menuManagerView.openWorkPlaceViewListener(new OpenWorkPlaceViewListener());
+        menuManagerView.openWorkGuardShiftListener(new OpenWorkGuardShiftListener());
+        menuManagerView.openHomeTownViewListener(new OpenHomeTownViewListener());
+        menuManagerView.openSalaryCadreViewListener(new OpenSalaryCadreViewListener());
     }
 
-    class OpenWorkerViewListener implements ActionListener {
+    static class OpenWorkerViewListener implements ActionListener {
         public void actionPerformed(ActionEvent e) {
+            WorkerView workerView = new WorkerView();
+            WorkerController workerController = new WorkerController(workerView);
             workerController.showWorkerMangerView();
         }
     }
 
-    class OpenEngineerViewListener implements ActionListener {
+    static class OpenEngineerViewListener implements ActionListener {
         public void actionPerformed(ActionEvent e) {
+            EngineerView engineerView = new EngineerView();
+            EngineerController engineerController = new EngineerController(engineerView);
             engineerController.showEngineerMangerView();
         }
     }
 
-    class OpenSpecializationViewListener implements ActionListener {
+    static class OpenSpecializationViewListener implements ActionListener {
+
         public void actionPerformed(ActionEvent e) {
+            SpecializationView specializationView = new SpecializationView();
+            SpecializationController specializationController = new SpecializationController(specializationView);
             specializationController.showSpecializationMangerView();
         }
     }
 
-    class OpenGuardViewListener implements ActionListener {
+    static class OpenGuardViewListener implements ActionListener {
         public void actionPerformed(ActionEvent e) {
+            GuardView guardView = new GuardView();
+            GuardController guardController = new GuardController(guardView);
             guardController.showGuardMangerView();
         }
     }
 
-    class OpenWorkPlaceViewListener implements ActionListener {
+    static class OpenWorkPlaceViewListener implements ActionListener {
         public void actionPerformed(ActionEvent e) {
+            WorkPlaceView workPlaceView = new WorkPlaceView();
+            WorkPlaceController workPlaceController = new WorkPlaceController(workPlaceView);
             workPlaceController.showWorkPlaceMangerView();
         }
     }
 
-    class OpenWorkGuardShiftListener implements ActionListener {
+     static class OpenWorkGuardShiftListener implements ActionListener {
         public void actionPerformed(ActionEvent e) {
+            GuardShiftView guardShiftView = new GuardShiftView();
+            GuardShiftController guardShiftController = new GuardShiftController(guardShiftView);
             guardShiftController.showGuardShiftMangerView();
         }
     }
 
-    class OpenHomeTownViewListener implements ActionListener {
+    static class OpenHomeTownViewListener implements ActionListener {
         public void actionPerformed(ActionEvent e) {
+            HomeTownView homeTownView = new HomeTownView();
+            HomeTownController homeTownController = new HomeTownController(homeTownView);
             homeTownController.showHomeTownMangerView();
         }
     }
 
-    class OpenSalaryCadreViewListener implements ActionListener {
+    static class OpenSalaryCadreViewListener implements ActionListener {
         public void actionPerformed(ActionEvent e) {
+            SalaryCadreView salaryCadreView = new SalaryCadreView();
+            SalaryCadreController salaryCadreController = new SalaryCadreController(salaryCadreView);
             salaryCadreController.showSalaryCadreMangerView();
         }
     }
