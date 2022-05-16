@@ -2,7 +2,6 @@ package src.dao;
 
 import src.connection.ConnectionFactory;
 import src.model.GuardShift;
-import src.model.WorkPlace;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -53,6 +52,17 @@ public class GuardShiftDao {
             }
         }
         return guardShiftList;
+    }
+
+    public boolean checkShiftNumber(Integer shiftId) throws SQLException {
+        String query = "select count(*) from tbl_quard_shift where shift_id = ?";
+        connection = getConnection();
+        ptmt = connection.prepareStatement(query);
+        ptmt.setInt(1, shiftId);
+        resultSet = ptmt.executeQuery();
+        resultSet.next();
+        int count = resultSet.getInt(1);
+        return count < 2;
     }
 
     public boolean addGuardShift(GuardShift guardShift) {

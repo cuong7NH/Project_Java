@@ -9,6 +9,7 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class GuardShiftController {
@@ -33,24 +34,19 @@ public class GuardShiftController {
                 guardShiftView.showMessage("Ca trực không tồn tại!");
                 return;
             }
-            ArrayList<GuardShift> guardShiftList = guardShiftDao.getGuardShiftList();
-            int count = 0;
-            int guardShiftListSize = guardShiftList.size();
-            for (int i = 0; i < guardShiftListSize; i++) {
-                if (guardShiftList.get(i).getShiftId().equals(guardShift.getShiftId())) {
-                    count++;
+            try {
+                if (guardShiftDao.checkShiftNumber(guardShift.getShiftId())) {
+                    if (guardShiftDao.addGuardShift(guardShift)) {
+                        guardShiftView.showGuardShiftList(guardShiftDao.getGuardShiftList());
+                        guardShiftView.showMessage("Thêm mới nơi bảo vệ  thành công!");
+                    } else {
+                        guardShiftView.showMessage("Error!");
+                    }
+                } else {
+                    guardShiftView.showMessage("1 ca trực có nhiều nhất 2 bảo vệ!");
                 }
-            }
-            if (count >= 2) {
-                guardShiftView.showMessage("1 ca trực có nhiều nhất 2 bảo vệ!");
-                return;
-
-            }
-            if (guardShiftDao.addGuardShift(guardShift)) {
-                guardShiftView.showGuardShiftList(guardShiftDao.getGuardShiftList());
-                guardShiftView.showMessage("Thêm mới nơi bảo vệ  thành công!");
-            } else {
-                guardShiftView.showMessage("Error!");
+            } catch (SQLException ex) {
+                throw new RuntimeException(ex);
             }
         }
     }
