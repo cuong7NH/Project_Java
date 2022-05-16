@@ -3,9 +3,9 @@ package src.sort;
 import src.model.Cadre;
 
 public class SalaryDTO extends Cadre implements Comparable<SalaryDTO>{
-    private Integer salary;
-    private Integer yearsOfExperience;
-    private Integer level;
+    private final Integer salary;
+    private final Integer yearsOfExperience;
+    private final Integer level;
 
     public SalaryDTO(
             String id, String name, Integer age,

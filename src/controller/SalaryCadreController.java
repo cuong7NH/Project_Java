@@ -4,7 +4,6 @@ import src.dao.SalaryCadreDao;
 import src.model.Cadre;
 import src.model.Engineer;
 import src.model.Worker;
-import src.sort.QuickSort;
 import src.sort.SalaryDTO;
 import src.util.QuicksortGeneric;
 import src.view.SalaryCadreView;
@@ -13,7 +12,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Objects;
 
 public class SalaryCadreController {
     private final SalaryCadreView salaryCadreView;

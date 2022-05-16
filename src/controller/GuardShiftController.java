@@ -14,8 +14,6 @@ import java.util.ArrayList;
 public class GuardShiftController {
     private final GuardShiftDao guardShiftDao;
     private final GuardShiftView guardShiftView;
-
-
     public GuardShiftController(GuardShiftView guardShiftView) {
         this.guardShiftView = guardShiftView;
         guardShiftDao = new GuardShiftDao();
@@ -23,7 +21,6 @@ public class GuardShiftController {
         guardShiftView.handleDeleteGuardShiftListener(new GuardShiftController.DeleteGuardShiftListener());
         guardShiftView.handleClickRowGuardShiftList(new GuardShiftController.ListGuardShiftSelectionListener());
     }
-
     class AddGuardShiftListener implements ActionListener {
         public void actionPerformed(ActionEvent e) {
             GuardShift guardShift = guardShiftView.getGuardShiftInfo();
@@ -57,7 +54,6 @@ public class GuardShiftController {
             }
         }
     }
-
     class DeleteGuardShiftListener implements ActionListener {
         public void actionPerformed(ActionEvent e) {
             GuardShift guardShift = guardShiftView.getGuardShiftInfo();
