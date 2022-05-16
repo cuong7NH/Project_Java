@@ -1,7 +1,12 @@
 package src.view;
 
+import jdk.dynalink.linker.support.Guards;
+import src.dao.GuardDao;
+import src.dao.HomeTownDao;
 import src.model.Engineer;
+import src.model.Guard;
 import src.model.GuardShift;
+import src.model.HomeTown;
 
 import javax.swing.*;
 import javax.swing.event.ListSelectionListener;
@@ -18,17 +23,18 @@ public class GuardShiftView extends JFrame implements ActionListener {
     private JButton editGuardShiftBtn;
     private JButton deleteGuardShiftBtn;
     // Field
-    private JTextField shiftIdField;
-    private JTextField guardIdField;
+    private final String[] shiftList = {"Sáng", "Chiều", "Tối"};
+    private JComboBox shiftIdField;
+    private JComboBox guardIdField;
     // Table
     private JTable guardShiftTable;
-    private final String[] columnNames = new String[]{"Ca trực", "Guard ID"};
+    private final String[] columnNames = new String[]{"Guard", "Ca trực"};
     private final Object guardShiftData = new Object[][]{};
-
 
     public GuardShiftView() {
         initComponents();
     }
+
     private void initComponents() {
         // Tạo spring layout
         SpringLayout layout = new SpringLayout();
@@ -53,7 +59,7 @@ public class GuardShiftView extends JFrame implements ActionListener {
 
         // khởi tạo các label
         JLabel shiftLabel = new JLabel("Ca Trực");
-        JLabel guardLabel = new JLabel("Guard ID");
+        JLabel guardLabel = new JLabel("Guard");
         panel.add(shiftLabel);
         panel.add(guardLabel);
         layout.putConstraint(SpringLayout.WEST, shiftLabel, 10, SpringLayout.WEST, panel);
@@ -62,9 +68,13 @@ public class GuardShiftView extends JFrame implements ActionListener {
         layout.putConstraint(SpringLayout.NORTH, guardLabel, 40, SpringLayout.NORTH, panel);
 
         // khởi tạo các input
-        shiftIdField = new JTextField(6);
-//        shiftIdField.setEditable(false);
-        guardIdField = new JTextField(15);
+        shiftIdField = new JComboBox(shiftList);
+        GuardDao guardDao = new GuardDao();
+        guardIdField = new JComboBox();
+        ArrayList<Guard> guardsList = guardDao.getGuardList();
+        for (Guard Guard : guardsList) {
+            guardIdField.addItem(Guard.getName());
+        }
         panel.add(shiftIdField);
         panel.add(guardIdField);
         layout.putConstraint(SpringLayout.WEST, shiftIdField, 100, SpringLayout.WEST, panel);
@@ -74,7 +84,7 @@ public class GuardShiftView extends JFrame implements ActionListener {
 
         // khởi tạo Table worker
         JScrollPane jScrollPaneGuardShiftTable = new JScrollPane();
-        guardShiftTable= new JTable();
+        guardShiftTable = new JTable();
         guardShiftTable.setModel(new DefaultTableModel((Object[][]) guardShiftData, columnNames));
         jScrollPaneGuardShiftTable.setViewportView(guardShiftTable);
         jScrollPaneGuardShiftTable.setPreferredSize(new Dimension(300, 300));
@@ -88,50 +98,83 @@ public class GuardShiftView extends JFrame implements ActionListener {
     }
 
     public void showGuardShiftList(ArrayList<GuardShift> guardShiftList) {
+        GuardDao guardDao = new GuardDao();
         int size = guardShiftList.size();
+        String shiftName = "Sáng";
+        
         String[][] guardShifts = new String[size][10];
         for (int i = 0; i < size; i++) {
-            guardShifts[i][0] = String.valueOf(guardShiftList.get(i).getShift_id());
-            guardShifts[i][1] = guardShiftList.get(i).getGuard_id();
+            Integer shiftId = guardShiftList.get(i).getShiftId();
+            if (shiftId.equals(0)) {
+                shiftName = "Sáng";
+            }
+            if (shiftId.equals(1)) {
+                shiftName = "Chiều";
+            }
+            if (shiftId.equals(2)) {
+                shiftName = "Tối";
+            }
+            guardShifts[i][0] = guardDao.getNameGuard(guardShiftList.get(i).getGuardId());
+            guardShifts[i][1] = shiftName;
         }
         guardShiftTable.setModel(new DefaultTableModel(guardShifts, columnNames));
     }
 
     public GuardShift getGuardShiftInfo() {
+        GuardDao guardDao = new GuardDao();
+        ArrayList<Guard> guardList = guardDao.getGuardList();
         try {
             return new GuardShift(
-                    guardIdField.getText().trim(),
-                    shiftIdField.getText() != null && !"".equals(shiftIdField.getText()) ? Integer.parseInt(shiftIdField.getText().trim()) : 0
-                        );
+                    guardList.get(guardIdField.getSelectedIndex()).getId(),
+                    shiftIdField.getSelectedIndex()
+            );
         } catch (Exception e) {
             showMessage(e.getMessage());
         }
         return null;
     }
+
     public void handleAddGuardShiftListener(ActionListener listener) {
         addGuardShiftBtn.addActionListener(listener);
     }
+
     public void handleEditGuardShiftListener(ActionListener listener) {
         editGuardShiftBtn.addActionListener(listener);
     }
+
     public void handleDeleteGuardShiftListener(ActionListener listener) {
         deleteGuardShiftBtn.addActionListener(listener);
     }
+
     public void handleClickRowGuardShiftList(ListSelectionListener listener) {
         guardShiftTable.getSelectionModel().addListSelectionListener(listener);
     }
+
     public void fillGuardShiftFromSelectedRow() {
+        GuardDao guardDao = new GuardDao();
         // lấy chỉ số của hàng được chọn
         int row = guardShiftTable.getSelectedRow();
+        Integer shiftId = 0;
         if (row >= 0) {
-            shiftIdField.setText(guardShiftTable.getModel().getValueAt(row, 0).toString());
-            guardIdField.setText(guardShiftTable.getModel().getValueAt(row, 1).toString());
+            String shiftName = guardShiftTable.getModel().getValueAt(row, 1).toString();
+            if (shiftName.equals("Sáng")) {
+                shiftId = 0;
+            }
+            if (shiftName.equals("Chiều")) {
+                shiftId = 1;
+            }
+            if (shiftName.equals("Tối")) {
+                shiftId = 2;
+            }
+            shiftIdField.setSelectedIndex(shiftId);
+            guardIdField.setSelectedIndex(guardDao.getIndexGuard(guardShiftTable.getModel().getValueAt(row, 0).toString()));
         }
     }
 
     public void showMessage(String message) {
         JOptionPane.showMessageDialog(this, message);
     }
+
     @Override
     public void actionPerformed(ActionEvent e) {
 

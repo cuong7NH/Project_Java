@@ -25,7 +25,6 @@ public class WorkPlaceController {
     class AddWorkPlaceListener implements ActionListener {
         public void actionPerformed(ActionEvent e) {
             WorkPlace workPlace = workPlaceView.getWorkPlaceInfo();
-            System.out.println("workPlace" + workPlace);
             if (workPlaceDao.addWorkPlace(workPlace)) {
                 workPlaceView.showWorkPlaceList(workPlaceDao.getWorkPlaceList());
                 workPlaceView.showMessage("Thêm mới nơi bảo vệ  thành công!");

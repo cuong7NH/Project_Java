@@ -5,9 +5,9 @@ import java.util.ArrayList;
 import java.util.Random;
 
 public class QuickSort {
-    private static ArrayList<Salary> inputArray = new ArrayList<Salary>();
+    private static ArrayList<SalaryDTO> inputArray = new ArrayList<SalaryDTO>();
 
-    public QuickSort(ArrayList<Salary> inputArray){
+    public QuickSort(ArrayList<SalaryDTO> inputArray){
         QuickSort.inputArray = inputArray;
     }
 
@@ -20,7 +20,7 @@ public class QuickSort {
         }
     }
 
-    public ArrayList<Salary> getSortedArray(){
+    public ArrayList<SalaryDTO> getSortedArray(){
         return QuickSort.inputArray;
     }
 
@@ -42,7 +42,7 @@ public class QuickSort {
             }
 
             if(init<length){
-                Salary temp;
+                SalaryDTO temp;
                 temp = inputArray.get(init);
                 inputArray.set(init,inputArray.get(length));
                 inputArray.set(length,temp);

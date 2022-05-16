@@ -2,6 +2,7 @@ package src.dao;
 
 import src.connection.ConnectionFactory;
 import src.model.GuardShift;
+import src.model.WorkPlace;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -60,8 +61,8 @@ public class GuardShiftDao {
             String queryString = "INSERT INTO tbl_quard_shift(guard_id, shift_id) VALUES(?, ?)";
             connection = getConnection();
             ptmt = connection.prepareStatement(queryString);
-            ptmt.setString(1, guardShift.getGuard_id());
-            ptmt.setInt(2, guardShift.getShift_id());
+            ptmt.setString(1, guardShift.getGuardId());
+            ptmt.setInt(2, guardShift.getShiftId());
             ptmt.executeUpdate();
             success = true;
         } catch (SQLException e) {

@@ -9,5 +9,7 @@ public interface WorkPlaceInterface {
     boolean addWorkPlace(WorkPlace workPlace);
     boolean editWorkPlace(WorkPlace workPlace);
     boolean deleteWorkPlace(Integer id);
+    Integer getIndexWorkPlace(String name);
+    String getNameWorkPlace(Integer id);
     boolean checkWorkPlace(Integer id);
 }

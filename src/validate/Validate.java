@@ -26,22 +26,21 @@ public class Validate {
         return level >= 1 && level <= 10;
     }
 
-    public boolean validateCoefficientsSalary(int coefficients_salary) {
-        return coefficients_salary >= 1 && coefficients_salary <= 10;
+    public boolean validateCoefficientsSalary(int coefficientsSalary) {
+        return coefficientsSalary >= 1 && coefficientsSalary <= 10;
     }
 
-    public boolean validateHomeTown(Integer home_town_id) {
-        System.out.println("home_town_id" + home_town_id);
+    public boolean validateHomeTown(Integer homeTownId) {
         HomeTownDao homeTownDao = new HomeTownDao();
-        return homeTownDao.checkHomeTown(home_town_id);
+        return homeTownDao.checkHomeTown(homeTownId);
     }
 
-    public boolean validateGuard(String guard_id) {
+    public boolean validateGuard(String guardId) {
         GuardDao guardDao = new GuardDao();
-        return guardDao.checkGuard(guard_id);
+        return guardDao.checkGuard(guardId);
     }
 
-    public boolean validateShift(Integer shift_id) {
-        return shift_id.equals(1) || shift_id.equals(2) || shift_id.equals(3);
+    public boolean validateShift(Integer shiftId) {
+        return shiftId.equals(0) || shiftId.equals(1) || shiftId.equals(2);
     }
 }

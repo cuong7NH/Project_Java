@@ -1,6 +1,5 @@
 package src.view;
 
-import src.model.Engineer;
 import src.model.WorkPlace;
 
 import javax.swing.*;

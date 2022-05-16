@@ -125,6 +125,32 @@ public class WorkPlaceDao implements WorkPlaceInterface {
         return success;
     }
 
+    public Integer getIndexWorkPlace(String name) {
+        WorkPlaceDao workPlaceDao = new WorkPlaceDao();
+        ArrayList<WorkPlace> workPlaceList = workPlaceDao.getWorkPlaceList();
+        int size = workPlaceList.size();
+        Integer index = 0;
+        for (int i = 0; i< size;  i++) {
+            if (workPlaceList.get(i).getName().equals(name)) {
+                index = i;
+            }
+        }
+        return index;
+    }
+
+    public String getNameWorkPlace(Integer id) {
+        WorkPlaceDao workPlaceDao = new WorkPlaceDao();
+        ArrayList<WorkPlace> workPlaceList = workPlaceDao.getWorkPlaceList();
+        int size = workPlaceList.size();
+        String name = "";
+        for (int i = 0; i< size;  i++) {
+            if (workPlaceList.get(i).getId().equals(id)) {
+                name = workPlaceList.get(i).getName();
+            }
+        }
+        return name;
+    }
+
     public boolean checkWorkPlace(Integer id) {
         WorkPlaceDao workPlaceDao = new WorkPlaceDao();
         WorkPlace workPlace =  workPlaceDao.getWorkPlaceList().stream()

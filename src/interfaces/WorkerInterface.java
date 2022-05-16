@@ -10,6 +10,7 @@ public interface WorkerInterface {
     boolean addWorker(Worker worker);
     boolean editWorker(Worker worker);
     boolean deleteWorker(String id);
+
     String getNewWorkerId();
 
 }

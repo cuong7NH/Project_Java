@@ -9,7 +9,6 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
-import java.util.concurrent.atomic.AtomicInteger;
 
 public class WorkerView extends JFrame implements ActionListener {
     // Button
@@ -20,17 +19,15 @@ public class WorkerView extends JFrame implements ActionListener {
     private JTextField idField;
     private JTextField nameField;
     private JTextField ageField;
-//    private JTextField genderField;
-    private final String genderList[]={"MALE", "FEMALE"};
+    private final String[] genderList ={"MALE", "FEMALE"};
     private JComboBox genderField;
     private JTextField addressField;
     private JTextField phoneField;
     private JTextField coefficientsSalaryField;
     private JTextField workDayField;
     private JTextField levelField;
-    private JTextField homeTownField;
 
-    private JComboBox homeTownTestField;
+    private JComboBox homeTownField;
 
     // Table
     private JTable workerTable;
@@ -114,13 +111,11 @@ public class WorkerView extends JFrame implements ActionListener {
         coefficientsSalaryField = new JTextField(15);
         workDayField = new JTextField(15);
         levelField = new JTextField(15);
-        homeTownField = new JTextField(15);
         HomeTownDao homeTownDao = new HomeTownDao();
-        homeTownTestField = new JComboBox();
+        homeTownField = new JComboBox();
         ArrayList<HomeTown> homeTownList = homeTownDao.getHomeTownList();
-        int homeTownListSize = homeTownList.size();
-        for (int i = 0; i < homeTownListSize; i++) {
-            homeTownTestField.addItem(homeTownList.get(i));
+        for (HomeTown homeTown : homeTownList) {
+            homeTownField.addItem(homeTown.getName());
         }
         panel.add(idField);
         panel.add(nameField);
@@ -131,8 +126,7 @@ public class WorkerView extends JFrame implements ActionListener {
         panel.add(coefficientsSalaryField);
         panel.add(workDayField);
         panel.add(levelField);
-//        panel.add(homeTownField);
-        panel.add(homeTownTestField);
+        panel.add(homeTownField);
         layout.putConstraint(SpringLayout.WEST, idField, 100, SpringLayout.WEST, panel);
         layout.putConstraint(SpringLayout.NORTH, idField, 10, SpringLayout.NORTH, panel);
         layout.putConstraint(SpringLayout.WEST, nameField, 100, SpringLayout.WEST, panel);
@@ -153,8 +147,6 @@ public class WorkerView extends JFrame implements ActionListener {
         layout.putConstraint(SpringLayout.NORTH, levelField, 250, SpringLayout.NORTH, panel);
         layout.putConstraint(SpringLayout.WEST, homeTownField, 100, SpringLayout.WEST, panel);
         layout.putConstraint(SpringLayout.NORTH, homeTownField, 280, SpringLayout.NORTH, panel);
-        layout.putConstraint(SpringLayout.WEST, homeTownTestField, 100, SpringLayout.WEST, panel);
-        layout.putConstraint(SpringLayout.NORTH, homeTownTestField, 280, SpringLayout.NORTH, panel);
         // khởi tạo Table worker
         JScrollPane jScrollPaneWorkerTable = new JScrollPane();
         workerTable = new JTable();
@@ -204,7 +196,7 @@ public class WorkerView extends JFrame implements ActionListener {
                     phoneField.getText().trim(),
                     Integer.parseInt(coefficientsSalaryField.getText().trim()),
                     Integer.parseInt(workDayField.getText().trim()),
-                    homeTownList.get(homeTownTestField.getSelectedIndex()).getId(),
+                    homeTownList.get(homeTownField.getSelectedIndex()).getId(),
                     Integer.parseInt(levelField.getText().trim())
             );
         } catch (Exception e) {
@@ -239,11 +231,10 @@ public class WorkerView extends JFrame implements ActionListener {
             coefficientsSalaryField.setText(workerTable.getModel().getValueAt(row, 6).toString());
             workDayField.setText(workerTable.getModel().getValueAt(row, 7).toString());
             levelField.setText(workerTable.getModel().getValueAt(row, 8).toString());
-            homeTownTestField.setSelectedIndex(homeTownDao.getIndexHomeTown(workerTable.getModel().getValueAt(row, 9).toString()));
+            homeTownField.setSelectedIndex(homeTownDao.getIndexHomeTown(workerTable.getModel().getValueAt(row, 9).toString()));
         }
     }
     public void showMessage(String message) {
         JOptionPane.showMessageDialog(this, message);
     }
-
 }

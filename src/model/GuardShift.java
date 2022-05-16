@@ -2,35 +2,35 @@ package src.model;
 
 public class GuardShift {
 
-    private String guard_id;
-    private Integer shift_id;
+    private String guardId;
+    private Integer shiftId;
 
-    public GuardShift(String guard_id, Integer shift_id) {
-        this.guard_id = guard_id;
-        this.shift_id = shift_id;
+    public GuardShift(String guardId, Integer shiftId) {
+        this.guardId = guardId;
+        this.shiftId = shiftId;
     }
 
-    public String getGuard_id() {
-        return guard_id;
+    public String getGuardId() {
+        return guardId;
     }
 
-    public void setGuard_id(String guard_id) {
-        this.guard_id = guard_id;
+    public void setGuardId(String guardId) {
+        this.guardId = guardId;
     }
 
-    public Integer getShift_id() {
-        return shift_id;
+    public Integer getShiftId() {
+        return shiftId;
     }
 
-    public void setShift_id(Integer shift_id) {
-        this.shift_id = shift_id;
+    public void setShiftId(Integer shiftId) {
+        this.shiftId = shiftId;
     }
 
     @Override
     public String toString() {
         return "GuardShift{" +
-                "guard_id='" + guard_id + '\'' +
-                ", shift_id=" + shift_id +
+                "guardId='" + guardId + '\'' +
+                ", shiftId=" + shiftId +
                 '}';
     }
 }

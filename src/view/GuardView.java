@@ -1,6 +1,10 @@
 package src.view;
 
+import src.dao.HomeTownDao;
+import src.dao.WorkPlaceDao;
 import src.model.Guard;
+import src.model.HomeTown;
+import src.model.WorkPlace;
 import src.model.Worker;
 
 import javax.swing.*;
@@ -21,13 +25,14 @@ public class GuardView extends JFrame implements ActionListener {
     private JTextField idField;
     private JTextField nameField;
     private JTextField ageField;
-    private JTextField genderField;
+    private final String[] genderList ={"MALE", "FEMALE"};
+    private JComboBox genderField;
     private JTextField addressField;
     private JTextField phoneField;
     private JTextField coefficientsSalaryField;
     private JTextField workDayField;
-    private JTextField workPlaceField;
-    private JTextField homeTownField;
+    private JComboBox workPlaceField;
+    private JComboBox homeTownField;
     // Table
     private JTable guardTable;
     private final String[] columnNames = new String[]{
@@ -107,13 +112,23 @@ public class GuardView extends JFrame implements ActionListener {
         idField.setEditable(false);
         nameField = new JTextField(15);
         ageField = new JTextField(15);
-        genderField = new JTextField(15);
+        genderField = new JComboBox(genderList);
         addressField = new JTextField(15);
         phoneField = new JTextField(15);
         coefficientsSalaryField = new JTextField(15);
         workDayField = new JTextField(15);
-        workPlaceField = new JTextField(15);
-        homeTownField = new JTextField(15);
+        WorkPlaceDao workPlaceDao = new WorkPlaceDao();
+        workPlaceField = new JComboBox();
+        ArrayList<WorkPlace> workPlaceList = workPlaceDao.getWorkPlaceList();
+        for (WorkPlace workPlace : workPlaceList) {
+            workPlaceField.addItem(workPlace.getName());
+        }
+        HomeTownDao homeTownDao = new HomeTownDao();
+        homeTownField = new JComboBox();
+        ArrayList<HomeTown> homeTownList = homeTownDao.getHomeTownList();
+        for (HomeTown homeTown : homeTownList) {
+            homeTownField.addItem(homeTown.getName());
+        }
         panel.add(idField);
         panel.add(nameField);
         panel.add(ageField);
@@ -161,36 +176,43 @@ public class GuardView extends JFrame implements ActionListener {
     }
 
     public void showGuardList(ArrayList<Guard> guardList) {
+        HomeTownDao homeTownDao = new HomeTownDao();
+        WorkPlaceDao workPlaceDao = new WorkPlaceDao();
         int size = guardList.size();
         String[][] workers = new String[size][10];
         for (int i = 0; i < size; i++) {
             workers[i][0] = guardList.get(i).getId();
             workers[i][1] = guardList.get(i).getName();
             workers[i][2] = String.valueOf(guardList.get(i).getAge());
-            workers[i][3] = String.valueOf(guardList.get(i).getGender());
+            workers[i][3] = guardList.get(i).getGender() == 0 ? "MALE" : "FEMALE";
             workers[i][4] = guardList.get(i).getAddress();
             workers[i][5] = guardList.get(i).getPhone();
             workers[i][6] = String.valueOf(guardList.get(i).getCoefficientsSalary());
             workers[i][7] = String.valueOf(guardList.get(i).getWorkDay());
-            workers[i][8] = String.valueOf(guardList.get(i).getWorkPlaceId());
-            workers[i][9] = String.valueOf(guardList.get(i).getHomeTownId());
+            workers[i][8] = workPlaceDao.getNameWorkPlace(guardList.get(i).getWorkPlaceId());
+            workers[i][9] = homeTownDao.getNameHomeTown(guardList.get(i).getHomeTownId());
         }
         guardTable.setModel(new DefaultTableModel(workers, columnNames));
     }
     public Guard getGuardInfo() {
+        HomeTownDao homeTownDao = new HomeTownDao();
+        ArrayList<HomeTown> homeTownList = homeTownDao.getHomeTownList();
+        WorkPlaceDao workPlaceDao = new WorkPlaceDao();
+        ArrayList<WorkPlace> workPlaceList = workPlaceDao.getWorkPlaceList();
         try {
             return new Guard(
                     idField.getText() != null && !"".equals(idField.getText()) ? idField.getText().trim() : "",
                     nameField.getText().trim(),
                     Integer.parseInt(ageField.getText().trim()),
-                    Integer.parseInt(genderField.getText().trim()),
+                    genderField.getSelectedIndex(),
                     addressField.getText().trim(),
                     phoneField.getText().trim(),
                     Integer.parseInt(coefficientsSalaryField.getText().trim()),
                     Integer.parseInt(workDayField.getText().trim()),
-                    Integer.parseInt(homeTownField.getText().trim()),
-                    Integer.parseInt(workPlaceField.getText().trim())
-            );
+                    workPlaceList.get(workPlaceField.getSelectedIndex()).getId(),
+                    homeTownList.get(homeTownField.getSelectedIndex()).getId()
+
+                    );
         } catch (Exception e) {
             showMessage(e.getMessage());
         }
@@ -209,20 +231,21 @@ public class GuardView extends JFrame implements ActionListener {
         guardTable.getSelectionModel().addListSelectionListener(listener);
     }
     public void fillWorkerFromSelectedRow() {
+        HomeTownDao homeTownDao = new HomeTownDao();
+        WorkPlaceDao workPlaceDao = new WorkPlaceDao();
         // lấy chỉ số của hàng được chọn
         int row = guardTable.getSelectedRow();
         if (row >= 0) {
             idField.setText(guardTable.getModel().getValueAt(row, 0).toString());
             nameField.setText(guardTable.getModel().getValueAt(row, 1).toString());
             ageField.setText(guardTable.getModel().getValueAt(row, 2).toString());
-            genderField.setText(guardTable.getModel().getValueAt(row, 3).toString());
+            genderField.setSelectedIndex(guardTable.getModel().getValueAt(row, 3).toString() == "MALE" ? 0 : 1);
             addressField.setText(guardTable.getModel().getValueAt(row, 4).toString());
             phoneField.setText(guardTable.getModel().getValueAt(row, 5).toString());
             coefficientsSalaryField.setText(guardTable.getModel().getValueAt(row, 6).toString());
             workDayField.setText(guardTable.getModel().getValueAt(row, 7).toString());
-            workPlaceField.setText(guardTable.getModel().getValueAt(row, 8).toString());
-            homeTownField.setText(guardTable.getModel().getValueAt(row, 9).toString());
-
+            workPlaceField.setSelectedIndex(workPlaceDao.getIndexWorkPlace(guardTable.getModel().getValueAt(row, 8).toString()));
+            homeTownField.setSelectedIndex(homeTownDao.getIndexHomeTown(guardTable.getModel().getValueAt(row, 9).toString()));
         }
     }
 

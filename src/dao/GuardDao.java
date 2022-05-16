@@ -4,6 +4,7 @@ import jdk.dynalink.linker.support.Guards;
 import src.connection.ConnectionFactory;
 import src.interfaces.GuardInterface;
 import src.model.Guard;
+import src.model.HomeTown;
 import src.model.WorkPlace;
 
 import java.sql.Connection;
@@ -65,7 +66,6 @@ public class GuardDao implements GuardInterface {
     }
 
     public boolean addGuard(Guard guard) {
-        System.out.println("guard" + guard.toString());
         boolean success = false;
         try {
             String queryString = "INSERT INTO tbl_guard(id, name, age, gender, address, phone, coefficients_salary, work_day, work_place_id, home_town_id) VALUES(?,?,?,?,?,?,?,?,?,?)";
@@ -182,6 +182,34 @@ public class GuardDao implements GuardInterface {
         int lastIdNumber = Integer.parseInt(lastId.substring(2));
         return "BV" + (lastIdNumber + 1);
     }
+
+    public Integer getIndexGuard(String name) {
+        GuardDao guardDao = new GuardDao();
+        ArrayList<Guard> guardList = guardDao.getGuardList();
+        int size = guardList.size();
+        Integer index = 0;
+        for (int i = 0; i< size;  i++) {
+            if (guardList.get(i).getName().equals(name)) {
+                index = i;
+            }
+        }
+        return index;
+    }
+    public String getNameGuard(String id) {
+        GuardDao guardDao = new GuardDao();
+
+        ArrayList<Guard> guardList = guardDao.getGuardList();
+
+        int size = guardList.size();
+        String name = "";
+        for (int i = 0; i< size;  i++) {
+            if (guardList.get(i).getId().equals(id)) {
+                name = guardList.get(i).getName();
+            }
+        }
+        return name;
+    }
+
 
     public boolean checkGuard(String id) {
         GuardDao guardDao = new GuardDao();

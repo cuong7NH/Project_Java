@@ -9,6 +9,7 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 public class GuardShiftController {
     private final GuardShiftDao guardShiftDao;
@@ -27,15 +28,27 @@ public class GuardShiftController {
         public void actionPerformed(ActionEvent e) {
             GuardShift guardShift = guardShiftView.getGuardShiftInfo();
             Validate Validate = new Validate();
-            if (!Validate.validateGuard(guardShift.getGuard_id())) {
+            if (!Validate.validateGuard(guardShift.getGuardId())) {
                 guardShiftView.showMessage("Bảo vệ không tồn tại!");
                 return;
             }
-            if (!Validate.validateShift(guardShift.getShift_id())) {
+            if (!Validate.validateShift(guardShift.getShiftId())) {
                 guardShiftView.showMessage("Ca trực không tồn tại!");
                 return;
             }
-            System.out.println("guardShift" + guardShift);
+            ArrayList<GuardShift> guardShiftList = guardShiftDao.getGuardShiftList();
+            int count = 0;
+            int guardShiftListSize = guardShiftList.size();
+            for (int i = 0; i < guardShiftListSize; i++) {
+                if (guardShiftList.get(i).getShiftId().equals(guardShift.getShiftId())) {
+                    count++;
+                }
+            }
+            if (count >= 2) {
+                guardShiftView.showMessage("1 ca trực có nhiều nhất 2 bảo vệ!");
+                return;
+
+            }
             if (guardShiftDao.addGuardShift(guardShift)) {
                 guardShiftView.showGuardShiftList(guardShiftDao.getGuardShiftList());
                 guardShiftView.showMessage("Thêm mới nơi bảo vệ  thành công!");
@@ -49,7 +62,7 @@ public class GuardShiftController {
         public void actionPerformed(ActionEvent e) {
             GuardShift guardShift = guardShiftView.getGuardShiftInfo();
             if (guardShift != null) {
-                if (guardShiftDao.deleteGuardShift(guardShift.getGuard_id(), guardShift.getShift_id())){
+                if (guardShiftDao.deleteGuardShift(guardShift.getGuardId(), guardShift.getShiftId())){
                     guardShiftView.showGuardShiftList(guardShiftDao.getGuardShiftList());
                     guardShiftView.showMessage("Xóa thành công!");
                 } else {

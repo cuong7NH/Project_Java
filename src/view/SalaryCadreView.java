@@ -3,7 +3,7 @@ package src.view;
 import src.model.Cadre;
 import src.model.Engineer;
 import src.model.Worker;
-import src.sort.Salary;
+import src.sort.SalaryDTO;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -11,7 +11,6 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
-import java.util.concurrent.atomic.AtomicInteger;
 
 public class SalaryCadreView extends JFrame implements ActionListener {
     // Khởi tạo Button
@@ -96,7 +95,7 @@ public class SalaryCadreView extends JFrame implements ActionListener {
         }
         salaryCadreTable.setModel(new DefaultTableModel(salaryCadres, columnNames));
     }
-    public void showSalaryCadreListSort(ArrayList<Salary> salaryCadreList) {
+    public void showSalaryCadreListSort(ArrayList<SalaryDTO> salaryCadreList) {
         int size = salaryCadreList.size();
         String[][] salaryCadres = new String[size][7];
 

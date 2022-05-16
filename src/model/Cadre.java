@@ -7,20 +7,20 @@ public class Cadre {
     protected Integer gender;
     protected String address;
     protected String phone;
-    protected Integer coefficients_salary;
+    protected Integer coefficientsSalary;
     protected Integer work_day;
-    protected Integer home_town_id;
+    protected Integer homeTownId;
 
-    public Cadre(String id, String name, Integer age, Integer gender, String address, String phone, Integer coefficients_salary, Integer work_day, Integer home_town_id) {
+    public Cadre(String id, String name, Integer age, Integer gender, String address, String phone, Integer coefficientsSalary, Integer work_day, Integer homeTownId) {
         this.id = id;
         this.name = name;
         this.age = age;
         this.gender = gender;
         this.address = address;
         this.phone = phone;
-        this.coefficients_salary = coefficients_salary;
+        this.coefficientsSalary = coefficientsSalary;
         this.work_day = work_day;
-        this.home_town_id = home_town_id;
+        this.homeTownId = homeTownId;
     }
 
     public String getId() {
@@ -72,11 +72,11 @@ public class Cadre {
     }
 
     public Integer getCoefficientsSalary() {
-        return coefficients_salary;
+        return coefficientsSalary;
     }
 
-    public void setCoefficientsSalary(Integer coefficients_salary) {
-        this.coefficients_salary = coefficients_salary;
+    public void setCoefficientsSalary(Integer coefficientsSalary) {
+        this.coefficientsSalary = coefficientsSalary;
     }
 
     public Integer getWorkDay() {
@@ -88,11 +88,11 @@ public class Cadre {
     }
 
     public Integer getHomeTownId() {
-        return home_town_id;
+        return homeTownId;
     }
 
-    public void setHomeTownId(Integer home_town_id) {
-        this.home_town_id = home_town_id;
+    public void setHomeTownId(Integer homeTownId) {
+        this.homeTownId = homeTownId;
     }
 
     @Override
@@ -104,9 +104,9 @@ public class Cadre {
                 ", gender=" + gender +
                 ", address='" + address + '\'' +
                 ", phone='" + phone + '\'' +
-                ", coefficients_salary=" + coefficients_salary +
+                ", coefficientsSalary=" + coefficientsSalary +
                 ", work_day=" + work_day +
-                ", home_town_id=" + home_town_id +
+                ", homeTownId=" + homeTownId +
                 '}';
     }
 }

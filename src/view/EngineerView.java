@@ -1,7 +1,8 @@
 package src.view;
-
+import src.dao.EngineerDao;
+import src.dao.HomeTownDao;
 import src.model.Engineer;
-import src.model.Worker;
+import src.model.HomeTown;
 
 import javax.swing.*;
 import javax.swing.event.ListSelectionListener;
@@ -21,13 +22,14 @@ public class EngineerView extends JFrame implements ActionListener {
     private JTextField idField;
     private JTextField nameField;
     private JTextField ageField;
-    private JTextField genderField;
+    private final String[] genderList ={"MALE", "FEMALE"};
+    private JComboBox genderField;
     private JTextField addressField;
     private JTextField phoneField;
     private JTextField coefficientsSalaryField;
     private JTextField workDayField;
     private JTextField yearsOfExperienceField;
-    private JTextField homeTownField;
+    private JComboBox homeTownField;
     // Table
     private JTable engineerTable;
     private final String[] columnNames = new String[]{
@@ -106,13 +108,18 @@ public class EngineerView extends JFrame implements ActionListener {
         idField.setEditable(false);
         nameField = new JTextField(15);
         ageField = new JTextField(15);
-        genderField = new JTextField(15);
+        genderField = new JComboBox(genderList);
         addressField = new JTextField(15);
         phoneField = new JTextField(15);
         coefficientsSalaryField = new JTextField(15);
         workDayField = new JTextField(15);
         yearsOfExperienceField = new JTextField(15);
-        homeTownField = new JTextField(15);
+        HomeTownDao homeTownDao = new HomeTownDao();
+        homeTownField = new JComboBox();
+        ArrayList<HomeTown> homeTownList = homeTownDao.getHomeTownList();
+        for (HomeTown homeTown : homeTownList) {
+            homeTownField.addItem(homeTown.getName());
+        }
         panel.add(idField);
         panel.add(nameField);
         panel.add(ageField);
@@ -160,34 +167,37 @@ public class EngineerView extends JFrame implements ActionListener {
     }
  
     public void showEngineerList(ArrayList<Engineer> engineerList) {
+        HomeTownDao homeTownDao = new HomeTownDao();
         int size = engineerList.size();
         String[][] workers = new String[size][10];
         for (int i = 0; i < size; i++) {
             workers[i][0] = engineerList.get(i).getId();
             workers[i][1] = engineerList.get(i).getName();
             workers[i][2] = String.valueOf(engineerList.get(i).getAge());
-            workers[i][3] = String.valueOf(engineerList.get(i).getGender());
+            workers[i][3] = engineerList.get(i).getGender() == 0 ? "MALE" : "FEMALE";
             workers[i][4] = engineerList.get(i).getAddress();
             workers[i][5] = engineerList.get(i).getPhone();
             workers[i][6] = String.valueOf(engineerList.get(i).getCoefficientsSalary());
             workers[i][7] = String.valueOf(engineerList.get(i).getWorkDay());
             workers[i][8] = String.valueOf(engineerList.get(i).getYearsOfExperience());
-            workers[i][9] = String.valueOf(engineerList.get(i).getHomeTownId());
+            workers[i][9] = homeTownDao.getNameHomeTown(engineerList.get(i).getHomeTownId());
         }
         engineerTable.setModel(new DefaultTableModel(workers, columnNames));
     }
     public Engineer getEngineerInfo() {
+        HomeTownDao homeTownDao = new HomeTownDao();
+        ArrayList<HomeTown> homeTownList = homeTownDao.getHomeTownList();
         try {
             return new Engineer(
                     idField.getText() != null && !"".equals(idField.getText()) ? idField.getText().trim() : "",
                     nameField.getText().trim(),
                     Integer.parseInt(ageField.getText().trim()),
-                    Integer.parseInt(genderField.getText().trim()),
+                    genderField.getSelectedIndex(),
                     addressField.getText().trim(),
                     phoneField.getText().trim(),
                     Integer.parseInt(coefficientsSalaryField.getText().trim()),
                     Integer.parseInt(workDayField.getText().trim()),
-                    Integer.parseInt(homeTownField.getText().trim()),
+                    homeTownList.get(homeTownField.getSelectedIndex()).getId(),
                     Integer.parseInt(yearsOfExperienceField.getText().trim())
             );
         } catch (Exception e) {
@@ -208,20 +218,20 @@ public class EngineerView extends JFrame implements ActionListener {
         engineerTable.getSelectionModel().addListSelectionListener(listener);
     }
     public void fillWorkerFromSelectedRow() {
+        HomeTownDao homeTownDao = new HomeTownDao();
         // lấy chỉ số của hàng được chọn
         int row = engineerTable.getSelectedRow();
         if (row >= 0) {
             idField.setText(engineerTable.getModel().getValueAt(row, 0).toString());
             nameField.setText(engineerTable.getModel().getValueAt(row, 1).toString());
             ageField.setText(engineerTable.getModel().getValueAt(row, 2).toString());
-            genderField.setText(engineerTable.getModel().getValueAt(row, 3).toString());
+            genderField.setSelectedIndex(engineerTable.getModel().getValueAt(row, 3).toString() == "MALE" ? 0 : 1);
             addressField.setText(engineerTable.getModel().getValueAt(row, 4).toString());
             phoneField.setText(engineerTable.getModel().getValueAt(row, 5).toString());
             coefficientsSalaryField.setText(engineerTable.getModel().getValueAt(row, 6).toString());
             workDayField.setText(engineerTable.getModel().getValueAt(row, 7).toString());
             yearsOfExperienceField.setText(engineerTable.getModel().getValueAt(row, 8).toString());
-            homeTownField.setText(engineerTable.getModel().getValueAt(row, 9).toString());
-
+            homeTownField.setSelectedIndex(homeTownDao.getIndexHomeTown(engineerTable.getModel().getValueAt(row, 9).toString()));
         }
     }
 
